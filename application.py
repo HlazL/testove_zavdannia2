@@ -1,6 +1,6 @@
 import hashlib
 from sqlalchemy import func
-from flask import Flask, render_template, request, session, redirect, flash
+from flask import Flask, render_template, request, flash
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -22,6 +22,7 @@ def index():
         name = request.form.get('name')
         user = Users.query.filter_by(name=name).first()
         if not (name and name.strip()):
+            flash("Будь ласка, вкажи ім'я")
             return render_template("index.html")
         if user:
             return render_template("hello_again.html", name=request.form.get("name"))
