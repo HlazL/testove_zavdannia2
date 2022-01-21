@@ -11,3 +11,16 @@ pip install -r requirements.txt
 type into the terminal:
 
 export FLASK_APP=application.py FLASK_ENV=development && flask run
+
+# Docker setup
+To create docker image:
+
+docker build . -t web-hello  
+
+To create volume: 
+
+docker volume create web
+
+To run:
+
+docker run --rm -p 5000:5000 -t -i -v web:/app/db web-hello
