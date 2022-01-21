@@ -24,3 +24,6 @@ docker volume create web
 To run:
 
 docker run --rm -p 5000:5000 -t -i -v web:/app/db web-hello
+
+The web page is going to be available on
+localhost:5000
