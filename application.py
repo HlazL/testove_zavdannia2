@@ -7,10 +7,15 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.secret_key = hashlib.sha1( 'abcdefg'.encode() ).hexdigest()
 
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///users.db'
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///db/users.db'
 db = SQLAlchemy(app)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-from models import Users
+
+from models import *
+
+@app.before_first_request
+def create_tables():
+    db.create_all()
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -41,3 +46,6 @@ def index():
 def users():
     users = Users.query.all()
     return render_template("users.html", users=users)
+
+if __name__ == '__main__':
+      app.run(host='0.0.0.0', port=5000)
